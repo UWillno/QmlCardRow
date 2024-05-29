@@ -19,7 +19,6 @@ ApplicationWindow {
     Logic {
         id:logic
     }
-
     StackView {
         id:stack
         anchors.fill: parent

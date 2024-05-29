@@ -5,7 +5,7 @@ Rectangle {
     property alias model: repeater.model
     // 卡片角度
     property real ang: -30
-    // 卡片的视觉宽度
+    // 卡片视觉宽度
     property real visualWidth: getVisualWidth(ang)
     // 拖动时的最大角度
     property real maxAngle: -10
@@ -19,11 +19,11 @@ Rectangle {
     // 首张卡片的位置
     property real firstX: 20
     property real firstY: 40
-    // 首长卡片与次张卡片的间距
+    // 首张卡片与次张卡片的间距
     property real firstSpacing: visualWidth *2/3
     // 横轴卡片间距
     // property real spacingX: 25
-    property real spacingX: Math.max(25,(parent.width - visualWidth*count)/count)
+    property real spacingX : Math.max(25,(parent.width - visualWidth*count)/count)
     // 纵轴卡片间距
     property real spacingY: 10
     // 上浮高度
@@ -32,6 +32,7 @@ Rectangle {
     property int count: repeater.model.length
     // 首长卡片的索引
     property int firstItemIndex : 0
+
     // 可以下拉信号
     signal canPull(var cardItem)
     // 取消下拉信号
@@ -63,19 +64,19 @@ Rectangle {
             height: cardHeight
             image: modelData.img
 
-            // 根据虚拟索引判断具体在哪一层
+            // 根据虚拟索引判断在哪一层
             z: parent.count - virtualIndex
             x: firstX + spacingX*virtualIndex + firstSpacing * (virtualIndex >=1 ? 1 :0)
             // 鼠标在里面时上浮
             y: mouseArea.containsMouse ?  firstY  + spacingY*virtualIndex + drift :  firstY  + spacingY*virtualIndex
-            // 鼠标在里面且为首项时回正
+           // 鼠标在里面且为首项时回正
             angle:mouseArea.containsMouse && index === firstItemIndex  ? 0: ang
 
             content :modelData.text
             // 边框
             border.width: 4
             border.color: "gray"
-            // 颜色梯度 预设随机数
+            // 颜色梯度
             gradient: logic.getRandomGradient()
 
             MouseArea{
@@ -85,11 +86,11 @@ Rectangle {
                 preventStealing: true
                 // 启用悬停
                 hoverEnabled: true
-                // 记录按住时y起始坐标
+                // 记录按住时y的坐标
                 property real yStart: 0
                 // 是否追踪
                 property bool tracing: false
-                // 按住不动信号触发的事件
+                // 按住不动信号触发的时间
                 pressAndHoldInterval: 500
 
                 onClicked: {
@@ -106,7 +107,7 @@ Rectangle {
 
                 onPositionChanged: (mouse)=>{
                                        if ( !tracing ) return
-                                       // 有下移就发射canPull，否则发射cancelPull
+                                       // 有下移就发射canPull,否则发射canceclPull
                                        if(mouse.y-yStart > 0){
                                            canPull(card)
                                            // 达到能push的下移距离 发射canPush

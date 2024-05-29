@@ -23,17 +23,16 @@ Page{
             // {img:"qrc:/qt-logo.png",text:"card5",url:"qrc:/CustomPage.qml"},
 
         ]
-        // 能释放时
+        // 能下拉时
         onCanPull:(cardItem)=> {
-                         // 覆盖卡片位置，记录梯度
-                         transitionRect.fillItem(cardItem)
-                         grad = cardItem.gradient
-                         transitionRect.canPush = false
-
-                     }
-        // 取消释放时
+                      // 覆盖卡片位置 记录梯度
+                      transitionRect.fillItem(cardItem)
+                      grad = cardItem.gradient
+                      transitionRect.canPush = false
+                  }
+        // 取消下拉时
         onCancelPull: {
-            // 还原标志，设为不可见
+            // 还原标志 设为不可见
             transitionRect.canPush = false
             transitionRect.visible = false
         }
@@ -55,7 +54,7 @@ Page{
     }
 
     Card{
-        // 能否push的标志 也可以设置到cardrow里 懒得折腾
+        // 能否push的标志
         property bool canPush: false
         visible: false
         id:transitionRect

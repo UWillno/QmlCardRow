@@ -25,7 +25,6 @@ Rectangle {
         Behavior on angle { SpringAnimation { spring: 2; damping: 0.2 } }
     }
     opacity: 0.7
-    // 弹簧动画
     Behavior on x {
         enabled: visible
         SpringAnimation { spring: 2; damping: 0.2 }
@@ -34,7 +33,6 @@ Rectangle {
         enabled: visible
         SpringAnimation { spring: 2; damping: 0.2 }
     }
-    // 数字动画
     Behavior on width {
         enabled: visible
         NumberAnimation {
