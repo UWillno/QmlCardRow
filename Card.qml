@@ -3,11 +3,13 @@ import QtQuick.Controls
 import QtQuick.Effects
 
 Rectangle {
+
+    id:rect
     property alias angle: rotation.angle
     property alias image: image.source
     property alias content: label.text
     antialiasing:true
-    id:rect
+
     width: 200
     height: 100
     radius: 10
@@ -24,9 +26,27 @@ Rectangle {
     }
     opacity: 0.7
     // 弹簧动画
-    Behavior on x { SpringAnimation { spring: 2; damping: 0.2 } }
-    Behavior on y { SpringAnimation { spring: 2; damping: 0.2 } }
-
+    Behavior on x {
+        enabled: visible
+        SpringAnimation { spring: 2; damping: 0.2 }
+    }
+    Behavior on y {
+        enabled: visible
+        SpringAnimation { spring: 2; damping: 0.2 }
+    }
+    // 数字动画
+    Behavior on width {
+        enabled: visible
+        NumberAnimation {
+            duration: 200
+        }
+    }
+    Behavior on height {
+        enabled: visible
+        NumberAnimation {
+            duration: 200
+        }
+    }
     Column {
         anchors.top: rect.top
         anchors.left: rect.left

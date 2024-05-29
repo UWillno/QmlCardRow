@@ -32,10 +32,10 @@ Rectangle {
     property int count: repeater.model.length
     // 首长卡片的索引
     property int firstItemIndex : 0
-    // 可以释放信号 （释放是可以被打断的）
-    signal canRelease(var cardItem)
-    // 取消释放信号
-    signal cancelRelease()
+    // 可以下拉信号
+    signal canPull(var cardItem)
+    // 取消下拉信号
+    signal cancelPull()
     // 可以推送信号
     signal canPush()
     // 推送信号
@@ -58,8 +58,6 @@ Rectangle {
             required property int index
             // 虚拟索引 用于计算实际位置
             property int virtualIndex: index
-            // 判断是否是首项
-            property bool isFirstItem: firstItemIndex === index
 
             width: cardWidth
             height: cardHeight
@@ -87,7 +85,7 @@ Rectangle {
                 preventStealing: true
                 // 启用悬停
                 hoverEnabled: true
-                // 计算按住时y起始坐标
+                // 记录按住时y起始坐标
                 property real yStart: 0
                 // 是否追踪
                 property bool tracing: false
@@ -108,16 +106,16 @@ Rectangle {
 
                 onPositionChanged: (mouse)=>{
                                        if ( !tracing ) return
-                                       // 有下移就发射canRelease，否则发射cancelRelease
+                                       // 有下移就发射canPull，否则发射cancelPull
                                        if(mouse.y-yStart > 0){
-                                           canRelease(card)
+                                           canPull(card)
                                            // 达到能push的下移距离 发射canPush
                                            if(Math.abs(mouse.y-yStart) > cardHeight/2){
                                                canPush()
                                            }
                                        }
                                        else
-                                       cancelRelease()
+                                       cancelPull()
                                    }
                 onReleased: (mouse)=>{
                                 // 松开时达到push要求 就发射pushing
@@ -125,7 +123,7 @@ Rectangle {
                                     pushing(modelData.url)
                                 }
                                 // 还原
-                                cancelRelease()
+                                cancelPull()
                                 tracing = false
                             }
             }
